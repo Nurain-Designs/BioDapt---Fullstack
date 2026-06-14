@@ -56,5 +56,5 @@ BioDapt/
 ## Extending the Backend
 Add new routes in `backend/src/index.ts` and install any required packages. Remember to restart the backend (or use `npm run dev:full` which watches changes).
 
-## License
-MIT – feel free to adapt and use for your own projects.
+Created by 
+Hafsa 
