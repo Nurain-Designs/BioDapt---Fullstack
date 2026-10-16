@@ -406,12 +406,14 @@ function AdvisorPage({ recs, setRecs, compareMaterials }: {
               transition={{ duration: 2, repeat: Infinity }}
               className="rounded-full bg-green-100 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-green-700"
             >
-              Live Engine
+              {DEMO_MODE ? "Demo mode" : "Live Engine"}
             </motion.span>
           </div>
           <p className="text-sm text-slate-500 max-w-2xl">
-            Type your product and disposal goals in plain English. The advisor uses a requirement parser,
-            a material classifier, and a biodegradation regression model to generate ranked recommendations.
+            Type your product and disposal goals in plain English.{" "}
+            {DEMO_MODE
+              ? "In this demo, a rule-based requirement parser scores the bundled sample materials in your browser to generate ranked recommendations."
+              : "The advisor uses a requirement parser, a material classifier, and a biodegradation regression model to generate ranked recommendations."}
           </p>
         </div>
       </Animated>
@@ -1231,8 +1233,10 @@ function ContactPage() {
               className="rounded-xl bg-emerald-50 border border-emerald-200 p-6 text-center"
             >
               <div className="text-4xl mb-2">✅</div>
-              <h3 className="font-bold text-emerald-800">Message sent!</h3>
-              <p className="text-sm text-emerald-700 mt-1">We'll get back to you within 24 hours.</p>
+              <h3 className="font-bold text-emerald-800">{DEMO_MODE ? "Demo only — message not sent" : "Message sent!"}</h3>
+              <p className="text-sm text-emerald-700 mt-1">
+                {DEMO_MODE ? "This public demo has no backend, so nothing was sent or stored." : "We'll get back to you within 24 hours."}
+              </p>
             </motion.div>
           )}
         </div>
@@ -1350,3 +1354,4 @@ function ContentPage({
 
 // Required for motion import in HomePage
 import { motion } from "framer-motion";
+import { DEMO_MODE } from "./lib/demo";

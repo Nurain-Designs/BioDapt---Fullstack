@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { post } from "../lib/api";
 import { MATERIALS } from "../data/materials";
 import { parseRequirements, recommend, buildAgentTrace, type Recommendation, type AgentStep } from "../lib/advisor";
+import { DEMO_MODE } from "../lib/demo";
 
 export interface ChatMessage {
   id: number;
@@ -59,7 +60,14 @@ export default function ChatAdvisor({
     setInput("");
     setThinking(true);
 
-    post<{ query: string; recommendations: Recommendation[] }>("/api/recommend", { query: q })
+    // Demo mode: no API is deployed, so rank with the in-browser advisor directly.
+    const request = DEMO_MODE
+      ? new Promise<{ query: string; recommendations: Recommendation[] }>((resolve) =>
+          setTimeout(() => resolve({ query: q, recommendations: recommend(parseRequirements(q)).slice(0, 3) }), 600),
+        )
+      : post<{ query: string; recommendations: Recommendation[] }>("/api/recommend", { query: q });
+
+    request
       .then(({ recommendations }) => {
         const req = parseRequirements(q);
         const localRecs = recommend(req);
@@ -110,7 +118,11 @@ export default function ChatAdvisor({
         </span>
         <div>
           <h2 className="text-sm font-semibold text-slate-900">Agentic AI Advisor</h2>
-          <p className="text-xs text-slate-400">LangChain + Ollama · classifier & regression tools</p>
+          <p className="text-xs text-slate-400">
+            {DEMO_MODE
+              ? "Demo mode · rule-based advisor running in your browser on sample material data"
+              : "LangChain + Ollama · classifier & regression tools"}
+          </p>
         </div>
       </div>
 

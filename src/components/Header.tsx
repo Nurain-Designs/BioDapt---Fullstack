@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "../utils/cn";
 
 import { ROUTE_META, type Route } from "../routes";
+import { DEMO_MODE } from "../lib/demo";
 
 interface HeaderProps {
   activeRoute: Route;
@@ -111,7 +112,7 @@ export default function Header({ activeRoute, onRouteChange }: HeaderProps) {
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
               <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
             </span>
-            Engine Online
+            {DEMO_MODE ? "Demo mode" : "Engine Online"}
           </motion.div>
 
 

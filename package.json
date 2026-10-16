@@ -8,7 +8,8 @@
     "build": "vite build",
     "preview": "vite preview",
     "backend": "npm --prefix backend run dev",
-    "dev:full": "concurrently \"npm run dev\" \"npm run backend\""
+    "dev:full": "concurrently \"npm run dev\" \"npm run backend\"",
+    "build:pages": "VITE_DEMO_MODE=true vite build && node scripts/demo-notice.mjs \"Recommendations come from a built-in rule-based advisor, not a live AI model.\""
   },
   "dependencies": {
     "clsx": "2.1.1",
